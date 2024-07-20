@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>scwarz</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .image-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('anya.jfif');
+      background-size: cover;
+      z-index: 0;
+    }
+
+    .button-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .button-container button {
+      background-color: rgba(255, 255, 255, 0.8);
+      color: #333;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      cursor: pointer;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+      animation-delay: 1s;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .button-container button:hover {
+      background-color: rgba(255, 255, 255, 1);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .animated-text {
+      font-size: 48px;
+      font-weight: bold;
+      color: white;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      animation: fadeInText 1s forwards;
+      animation-delay: 2s;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInText {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes letterAnimation {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <video class="video-background" loop muted>
+    <source src="3.webm" type="video/webm">
+  </video>
+
+  <div class="image-background"></div>
+
+  <div class="button-container">
+    <button class="load-button" onclick="playAudioAndVideo()">Load</button>
+    <button class="link-button" onclick="location.href='https://t.me/sscwarz'">Telegram</button>
+    <button class="link-button" onclick="location.href='https://www.youtube.com/watch?v=oh0RQ_TgDnQ'">CV</button>
+    <button class="link-button" onclick="location.href='https://discordapp.com/users/822367604197949440'">Discord</button>
+  </div>
+
+  <div class="animated-text" id="animatedText"></div>
+
+  <script>
+    function playAudioAndVideo() {
+      var audio = new Audio('3.mp3');
+      audio.loop = true; // Зацикливаем аудио
+      audio.play();
+
+      var video = document.querySelector('.video-background');
+      video.play();
+
+      var buttonContainer = document.querySelector('.button-container');
+      buttonContainer.style.display = 'none';
+
+      var imageBackground = document.querySelector('.image-background');
+      imageBackground.style.display = 'none';
+
+      var animatedText = document.getElementById('animatedText');
+      var text = ".scwarz.";
+      var delay = 1000;
+
+      function createLetterElement(letter, delay) {
+        var span = document.createElement('span');
+        span.innerHTML = letter;
+        span.style.animation = "letterAnimation 0.5s forwards";
+        span.style.animationDelay = delay + "ms";
+        animatedText.appendChild(span);
+      }
+
+      for (var i = 0; i < text.length; i++) {
+        createLetterElement(text[i], delay * i);
+      }
+
+      function blinkLetters() {
+        var letters = animatedText.getElementsByTagName('span');
+
+        for (var i = 0; i < letters.length; i++) {
+          letters[i].style.animation = "letterAnimation 0.5s alternate infinite";
+        }
+      }
+
+      setTimeout(blinkLetters, delay * text.length);
+    }
+  </script>
+</body>
+</html>
